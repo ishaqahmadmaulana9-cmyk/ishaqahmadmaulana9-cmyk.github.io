@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produk | Bag Store</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #f3f5f8;
+            color: #333;
+        }
+
+        /* NAVIGATION */
+        nav {
+            background: #fff;
+            padding: 15px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .logo span {
+            color: #ffcc00;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #ffcc00;
+        }
+
+        /* PRODUCTS SECTION */
+        .products-section {
+            padding: 60px 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .products-section h1 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 40px;
+        }
+
+        .products-section h1 span {
+            color: #ffcc00;
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .card h3 {
+            margin: 15px 0 10px;
+            font-size: 1.2em;
+        }
+
+        .card p {
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .card .price {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.2em;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .card .total-sales {
+            color: #28a745;
+            font-weight: 500;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        .btn {
+            display: block;
+            background: #ffcc00;
+            color: #000;
+            padding: 12px 30px;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255, 204, 0, 0.4);
+        }
+
+        /* FOOTER */
+        footer {
+            background: #333;
+            color: #fff;
+            padding: 40px 50px;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        footer a {
+            color: #ffcc00;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVIGATION -->
+    <nav>
+        <div class="logo">BAG <span>STORE</span></div>
+        <div class="nav-links">
+            <a href="home.html">Home</a>
+            <a href="produk.html" class="active">Produk</a>
+            <a href="kontak.html">Kontak</a>
+        </div>
+    </nav>
+
+    <!-- PRODUCTS -->
+    <section class="products-section">
+        <h1>Koleksi <span>Tas</span></h1>
+
+        <div class="products">
+            <div class="card">
+                <img src="OIP.jpeg" alt="Tas Ransel">
+                <h3>Tas Ransel</h3>
+                <p>Cocok untuk sekolah & kuliah</p>
+                <span class="price">Rp80.000</span>
+                <span class="total-sales">Terjual: 12 barang</span>
+                <button class="btn">Tambah ke Keranjang</button>
+            </div>
+
+            <div class="card">
+                <img src="Tas-Kerja-Pria.jpg" alt="Tas Kerja">
+                <h3>Tas Kerja</h3>
+                <p>Ringan & stylish</p>
+                <span class="price">Rp140.000</span>
+                <span class="total-sales">Terjual: 5 barang</span>
+                <button class="btn">Tambah ke Keranjang</button>
+            </div>
+
+            <div class="card">
+                <img src="original_tas_selempang_pria_eiger_7310_scoria_waist_bag_1-5l_black_full03_rp21jfnp.jpg" alt="Tas Selempang">
+                <h3>Tas Selempang</h3>
+                <p>Tampil profesional</p>
+                <span class="price">Rp230.000</span>
+                <span class="total-sales">Terjual: 3 barang</span>
+                <button class="btn">Tambah ke Keranjang</button>
+            </div>
+
+            <div class="card">
+                <img src="merek-tas-travel-yang-bagus-4.jpg" alt="Tas Traveling">
+                <h3>Tas Traveling</h3>
+                <p>Kuat untuk perjalanan jauh</p>
+                <span class="price">Rp370.000</span>
+                <span class="total-sales">Terjual: 1 barang</span>
+                <button class="btn">Tambah ke Keranjang</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p><strong>Bag Store</strong> - Toko tas berkualitas dengan harga terjangkau</p>
+        <p>📍 Jl. Contoh No.123, Jakarta | 📞 0812-3456-7890</p>
+        <p>&copy; 2026 Bag Store. All rights reserved.</p>
+    </footer>
+</body>
+</html>

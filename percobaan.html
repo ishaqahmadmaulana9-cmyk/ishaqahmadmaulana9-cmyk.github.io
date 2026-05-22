@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Toko Tas | Bag Store</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background: #f3f5f8;
+    color: #121212;
+}
+
+.cart-icon {
+    position: fixed;
+    top: 90px;
+    right: 20px;
+    background: #f3d305;
+    color: #0a0a0a;
+    padding: 12px 20px;
+    border-radius: 30px;
+    cursor: pointer;
+    z-index: 1000;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.cart-icon:hover {
+    background: #f7e706;
+}
+
+.cart-count {
+    background: #28a745;
+    color: #fff;
+    border-radius: 50%;
+    padding: 2px 8px;
+    font-size: 0.8em;
+}
+
+.cart-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 350px;
+    height: 100%;
+    background: #fff;
+    z-index: 2000;
+    box-shadow: -5px 0 20px rgba(0,0,0,0.3);
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.cart-modal.active {
+    display: block;
+}
+
+.cart-modal h2 {
+    margin-bottom: 20px;
+    border-bottom: 2px solid #ffcc00;
+    padding-bottom: 10px;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.cart-item-info h4 {
+    margin-bottom: 5px;
+}
+
+.cart-item-info p {
+    color: #667eea;
+    font-weight: bold;
+}
+
+.remove-btn {
+    background: #28a745;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.cart-total {
+    margin-top: 20px;
+    padding: 20px;
+    background: #f3f5f8;
+    border-radius: 10px;
+}
+
+.cart-total h3 {
+    display: flex;
+    justify-content: space-between;
+}
+
+.checkout-btn {
+    background: #28a745;
+    color: #fff;
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1em;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+.checkout-btn:hover {
+    background: #218838;
+}
+
+.close-cart {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 2em;
+    cursor: pointer;
+}
+
+.checkout-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 3000;
+    justify-content: center;
+    align-items: center;
+}
+
+.checkout-modal.active {
+    display: flex;
+}
+
+.checkout-content {
+    background: #fff;
+    padding: 30px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.checkout-content h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-group input, .form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1em;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.payment-methods {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.payment-option {
+    flex: 1;
+    min-width: 120px;
+    padding: 15px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: center;
+    transition: 0.3s;
+}
+
+.payment-option:hover, .payment-option.selected {
+    border-color: #00ff26;
+    background: #fff9e6;
+}
+
+.payment-option input {
+    display: none;
+}
+
+.submit-order-btn {
+    background: #28a745;
+    color: #fff;
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1em;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.submit-order-btn:hover {
+    background: #218838;
+}
+
+.close-checkout {
+    float: right;
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+.order-success {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 4000;
+    justify-content: center;
+    align-items: center;
+}
+
+.order-success.active {
+    display: flex;
+}
+
+.success-content {
+    background: #fff;
+    padding: 40px;
+    border-radius: 15px;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+}
+
+.success-content h2 {
+    color: #28a745;
+    margin-bottom: 15px;
+}
+
+.success-content p {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.btn {
+    background: #fcd704;
+    color: #000;
+    padding: 12px 25px;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 10px;
+    transition: 0.3s;
+    border: none;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background: #ffffff;
+    transform: scale(1.05);
+}
+
+#produk {
+    padding: 50px 20px;
+}
+
+.products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background: #fff;
+    padding: 15px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+
+.card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.card .price {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #28a745;
+    margin: 10px 0;
+}
+
+/* CSS UPDATE: Perbaikan Tampilan Rating */
+.stars-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+}
+
+.rating-number {
+    font-weight: bold;
+    color: #444;
+    font-size: 1.1em;
+}
+
+.stars-wrapper {
+    display: flex;
+    gap: 2px;
+}
+
+.star {
+    font-size: 1.2em;
+    color: #ddd;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.star.filled,
+.star.selected,
+.star.half-filled::after {
+    color: #ffd700;
+}
+
+.star.half-filled {
+    position: relative;
+    color: #ddd;
+}
+
+.star.half-filled::after {
+    content: '★';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 50%;
+    overflow: hidden;
+}
+
+.rating-text {
+    display: none; /* Sembunyikan teks keterangan yang panjang */
+}
+
+.card .total-sales {
+    background: linear-gradient(135deg, #28a745, #20c997);
+    color: white;
+    padding: 8px;
+    border-radius: 20px;
+    font-weight: bold;
+    margin-top: 10px;
+    font-size: 1em;
+}
+
+footer {
+    background: #ffea00;
+    text-align: center;
+    padding: 30px;
+}
+
+.visitor-counter {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    color: #fff;
+    padding: 40px 20px;
+    text-align: center;
+    margin-top: 0;
+}
+
+.visitor-content h3 {
+    font-size: 1.3em;
+    margin-bottom: 15px;
+    color: #ffcc00;
+}
+
+.counter-display {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.counter-number {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #ffcc00;
+    background: rgba(255, 204, 0, 0.1);
+    padding: 10px 25px;
+    border-radius: 10px;
+    border: 2px solid #ffcc00;
+    min-width: 120px;
+}
+
+.counter-label {
+    font-size: 1.1em;
+    color: #ccc;
+}
+
+header {
+    background: url('foto-tas.png') no-repeat center center/cover;
+    color: #fff;
+    padding: 80px 20px;
+    text-align: center;
+    position: relative
+}
+
+header::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    top: 0;
+    left: 0;
+}
+
+header * {
+    position: relative;
+    z-index: 1;
+}
+
+section h2 {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 2.5em;
+    color: #333;
+}
+
+#sales-section {
+    padding: 50px 20px;
+    background: #fff;
+}
+
+.chart-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: #f8f9fa;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.chart-title {
+    text-align: center;
+    font-size: 2em;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+.sales-chart {
+    position: relative;
+    height: 400px;
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+    padding: 20px 0;
+}
+
+.chart-bar {
+    flex: 1;
+    background: linear-gradient(135deg, #28a745, #20c997);
+    border-radius: 8px 8px 0 0;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+}
+
+.chart-bar:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(40, 167, 69, 0.5);
+}
+
+.bar-label {
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-weight: bold;
+    color: #333;
+    font-size: 0.9em;
+}
+
+.bar-value {
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #28a745;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 15px;
+    font-size: 0.8em;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.total-sales {
+    text-align: center;
+    margin-top: 30px;
+    padding: 20px;
+    background: linear-gradient(135deg, #28a745, #20c997);
+    color: white;
+    border-radius: 15px;
+}
+
+.total-sales h3 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+/* NAVBAR */
+.navbar {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    background: #f3d305;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    z-index: 999;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.logo {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #000;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 25px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #000;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.nav-links a:hover {
+    color: #28a745;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        gap: 10px;
+        padding: 15px;
+    }
+
+    .nav-links {
+        gap: 15px;
+    }
+}
+</style>
+
+</head>
+<body>
+
+    <nav class="navbar">
+    <div class="logo"> BAG STORE</div>
+
+    <ul class="nav-links">
+        <li><a href="#">Home</a></li>
+        <li><a href="#produk">Produk</a></li>
+        <li><a href="#sales-section">Penjualan</a></li>
+    </ul>
+</nav>
+
+<div class="cart-icon" onclick="openCart()">
+    🛒 Keranjang <span class="cart-count" id="cartCount">0</span>
+</div>
+
+<div class="cart-modal" id="cartModal">
+    <span class="close-cart" onclick="closeCart()">&times;</span>
+    <h2>Keranjang Belanja</h2>
+    <div id="cartItems"></div>
+    <div class="cart-total">
+        <h3>Total: <span id="cartTotal">Rp0</span></h3>
+    </div>
+    <button class="checkout-btn" onclick="openCheckout()">Checkout</button>
+</div>
+
+<div class="checkout-modal" id="checkoutModal">
+    <div class="checkout-content">
+        <span class="close-checkout" onclick="closeCheckout()">&times;</span>
+        <h2>Form Pembayaran</h2>
+        <form id="checkoutForm" onsubmit="submitOrder(event)">
+            <div class="form-group">
+                <label>Nama Lengkap</label>
+                <input type="text" id="customerName" required placeholder="Masukkan nama Anda">
+            </div>
+            <div class="form-group">
+                <label>No. WhatsApp</label>
+                <input type="number" id="customerPhone" required placeholder="08xxxxxxxxxx">
+            </div>
+            <div class="form-group">
+                <label>Alamat Pengiriman</label>
+                <textarea id="customerAddress" required placeholder="Masukkan alamat lengkap"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Metode Pembayaran</label>
+                <div class="payment-methods">
+                    <label class="payment-option">
+                        <input type="radio" name="payment" value="transfer" checked>
+                        💳 Transfer Bank
+                    </label>
+                    <label class="payment-option">
+                        <input type="radio" name="payment" value="cod">
+                        💵 COD (Bayar di Tempat)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Catatan (Opsional)</label>
+                <textarea id="customerNotes" placeholder="Catatan untuk pesanan"></textarea>
+            </div>
+            <button type="submit" class="submit-order-btn">Kirim Pesanan</button>
+        </form>
+    </div>
+</div>
+
+<div class="order-success" id="orderSuccess">
+    <div class="success-content">
+        <h2>✅ Pesanan Berhasil!</h2>
+        <p>Terima kasih atas pesanan Anda.Pesanan anda akan segera di peroses</p>
+        <button class="btn" onclick="closeSuccess()">Kembali ke Toko</button>
+    </div>
+</div>
+
+<header>
+    <h1>Bag Store</h1>
+    <p>Tas kekinian dengan kualitas terbaik</p>
+    <a href="#produk" class="btn">Lihat Koleksi</a>
+</header>
+
+<section id="produk">
+    <h2>Koleksi Tas</h2>
+
+    <div class="products">
+        <div class="card" data-name="Tas Ransel" data-price="80000">
+            <img src="tas-sekolas1.jpeg" alt="Tas Ransel">
+            <h3>Tas Ransel </h3>
+            <p>Cocok untuk sekolah & kuliah</p>
+            <p class="price">Rp80.000</p>
+            <div class="stars-container" data-product="Tas Ransel"></div>
+            <div class="rating-text"></div>
+            <div class="total-sales" id="total-ransel">Terjual: 12 barang</div>
+            <button class="btn add-to-cart">Tambah ke Keranjang</button>
+        </div>
+
+        <div class="card" data-name="Tas Kerja" data-price="140000">
+            <img src="Tas-Kerja-Pria.jpg" alt="Tas Kerja">
+            <h3>Tas Kerja </h3>
+            <p>Ringan & stylish</p>
+            <p class="price">Rp140.000</p>
+            <div class="stars-container" data-product="Tas Kerja"></div>
+            <div class="rating-text"></div>
+            <div class="total-sales" id="total-kerja">Terjual: 5 barang</div>
+            <button class="btn add-to-cart">Tambah ke Keranjang</button>
+        </div>
+
+        <div class="card" data-name="Tas Selempang" data-price="230000">
+            <img src="LEkq7KJWTc5y6kaqFSRSwsklJZQoh7KOxjLsKSxkSSFlLsG7M_6wgW0MyG7a41a7s-bf-whS8bFOh-u9jTtCPbyWq9Z4pqs5bkR82VaTHWs8I5BDpYck_terL0KFsPq7txb0vLRcOVEagmcEDJUqSryv2yxXaQc7a4C_U_n3PWylCCA3eAnNUpu3aI_DSdre.jpeg">
+            <h3>Tas Selempang</h3>
+            <p>Tampil profesional</p>
+            <p class="price">Rp230.000</p>
+            <div class="stars-container" data-product="Tas Selempang"></div>
+            <div class="rating-text"></div>
+            <div class="total-sales" id="total-selempang">Terjual: 3 barang</div>
+            <button class="btn add-to-cart">Tambah ke Keranjang</button>
+        </div>
+
+        <div class="card" data-name="Tas Traveling" data-price="370000">
+            <img src="merek-tas-travel-yang-bagus-4.jpg" alt="Tas Traveling">
+            <h3>Tas Traveling </h3>
+            <p>Kuat untuk perjalanan jauh</p>
+            <p class="price">Rp370.000</p>
+            <div class="stars-container" data-product="Tas Traveling"></div>
+            <div class="rating-text"></div>
+            <div class="total-sales" id="total-travel">Terjual: 1 barang</div>
+            <button class="btn add-to-cart">Tambah ke Keranjang</button>
+        </div>
+
+        <div class="card" data-name="Tas Mendaki" data-price="370000">
+            <img src="tas mendaki.jpeg" alt="Tas Mendaki">
+            <h3>Tas mendaki </h3>
+            <p>Kuat untuk perjalanan jauh</p>
+            <p class="price">Rp1.00000</p>
+            <div class="stars-container" data-product="Tas Mendaki"></div>
+            <div class="rating-text"></div>
+            <div class="total-sales" id="total-travel">Terjual: 1 barang</div>
+            <button class="btn add-to-cart">Tambah ke Keranjang</button>
+        </div>
+
+    </div>
+</section>
+
+<footer>
+    <p><strong>Bag Store</strong> - Belanja tas berkualitas di website kami!</p>
+</footer>
+
+<section id="sales-section">
+    <div class="chart-container">
+        <h2 class="chart-title">📊 Diagram Penjualan</h2>
+        <div class="sales-chart" id="salesChart">
+        </div>
+        <div class="total-sales">
+            <h3>Total Penjualan</h3>
+            <div id="totalSalesAmount">Rp 2.450.000</div>
+        </div>
+    </div>
+</section>
+
+<section class="visitor-counter">
+    <div class="visitor-content">
+        <h3>Pengunjung Website</h3>
+        <div class="counter-display">
+            <span class="counter-number" id="visitorCount">0</span>
+            <span class="counter-label">orang telah mengunjungi</span>
+        </div>
+    </div>
+</section>
+
+<script>
+const salesData = [
+    { name: 'Tas Ransel', sales: 12, price: 80000, total: 960000, element: 'total-ransel', ratingSum: 42, ratingCount: 10 },
+    { name: 'Tas Kerja', sales: 5, price: 140000, total: 700000, element: 'total-kerja', ratingSum: 18, ratingCount: 5 },
+    { name: 'Tas Selempang', sales: 3, price: 230000, total: 690000, element: 'total-selempang', ratingSum: 12, ratingCount: 3 },
+    { name: 'Tas Traveling', sales: 1, price: 370000, total: 370000, element: 'total-travel', ratingSum: 4, ratingCount: 1 },
+    { name: 'Tas Mendaki', sales: 2, price: 1.00000, total: 1.00000, element: 'total-Mendaki', ratingSum: 5, ratingCount: 10 },
+];
+
+function loadRatings() {
+    const savedRatings = JSON.parse(localStorage.getItem('productRatings')) || [];
+    if (!Array.isArray(savedRatings)) return;
+
+    savedRatings.forEach(savedItem => {
+        const item = salesData.find(data => data.name === savedItem.name);
+        if (item && typeof savedItem.ratingSum === 'number' && typeof savedItem.ratingCount === 'number') {
+            item.ratingSum = savedItem.ratingSum;
+            item.ratingCount = savedItem.ratingCount;
+        }
+    });
+}
+
+function saveRatings() {
+    const ratingsToSave = salesData.map(({ name, ratingSum, ratingCount }) => ({ name, ratingSum, ratingCount }));
+    localStorage.setItem('productRatings', JSON.stringify(ratingsToSave));
+}
+
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+let orders = JSON.parse(localStorage.getItem('orders')) || [];
+
+function createSalesChart() {
+    const chart = document.getElementById('salesChart');
+    const totalSalesEl = document.getElementById('totalSalesAmount');
+    
+    let totalSales = 0;
+    chart.innerHTML = '';
+    
+    const maxSales = Math.max(...salesData.map(d => d.sales), 1);
+
+    salesData.forEach(item => {
+        totalSales += item.total;
+        
+        const maxHeight = 350;
+        const barHeight = (item.sales / maxSales) * maxHeight;
+        
+        const bar = document.createElement('div');
+        bar.className = 'chart-bar';
+        bar.style.height = `${barHeight}px`;
+        bar.innerHTML = `
+            <div class="bar-value">${item.sales} pcs</div>
+            <div class="bar-label">${item.name}</div>
+        `;
+        bar.title = `Rp${item.total.toLocaleString('id-ID')}`;
+        
+        chart.appendChild(bar);
+
+        const totalEl = document.getElementById(item.element);
+        if (totalEl) {
+            totalEl.textContent = `Terjual: ${item.sales} unit`;
+        }
+    });
+    
+    totalSalesEl.textContent = `Rp${totalSales.toLocaleString('id-ID')}`;
+    renderProductRatings();
+}
+
+// JAVASCRIPT UPDATE: Fungsi Render Rating Baru
+function renderProductRatings() {
+    salesData.forEach(item => {
+        const starsContainer = document.querySelector(`[data-product="${item.name}"]`);
+        if (!starsContainer) return;
+
+        const rating = item.ratingCount ? item.ratingSum / item.ratingCount : 0;
+        const displayRating = Math.round(rating * 2) / 2;
+
+        starsContainer.innerHTML = '';
+
+        // 1. Tambahkan Angka Rata-rata di samping bintang
+        const numSpan = document.createElement('span');
+        numSpan.className = 'rating-number';
+        numSpan.textContent = rating.toFixed(1);
+        starsContainer.appendChild(numSpan);
+
+        // 2. Pembungkus Bintang
+        const wrapper = document.createElement('div');
+        wrapper.className = 'stars-wrapper';
+
+        for (let i = 1; i <= 5; i++) {
+            const star = document.createElement('span');
+            star.className = 'star';
+            star.textContent = '★';
+            star.dataset.value = i;
+
+            if (i <= Math.floor(displayRating)) {
+                star.classList.add('filled');
+            } else if (i === Math.ceil(displayRating) && displayRating % 1 === 0.5) {
+                star.classList.add('half-filled');
+            }
+
+            star.addEventListener('click', () => {
+                item.ratingSum += i;
+                item.ratingCount += 1;
+                saveRatings();
+                renderProductRatings();
+            });
+
+            wrapper.appendChild(star);
+        }
+        starsContainer.appendChild(wrapper);
+    });
+}
+
+function updateCartDisplay() {
+    const cartCount = document.getElementById('cartCount');
+    const cartItems = document.getElementById('cartItems');
+    const cartTotal = document.getElementById('cartTotal');
+    
+    cartCount.textContent = cart.length;
+    
+    if (cart.length === 0) {
+        cartItems.innerHTML = '<p style="text-align: center; color: #666;">Keranjang kosong</p>';
+        cartTotal.textContent = 'Rp0';
+        return;
+    }
+    
+    cartItems.innerHTML = cart.map((item, index) => `
+        <div class="cart-item">
+            <div class="cart-item-info">
+                <h4>${item.name}</h4>
+                <p>Rp${item.price.toLocaleString('id-ID')}</p>
+            </div>
+            <button class="remove-btn" onclick="removeFromCart(${index})">Hapus</button>
+        </div>
+    `).join('');
+    
+    const total = cart.reduce((sum, item) => sum + item.price, 0);
+    cartTotal.textContent = `Rp${total.toLocaleString('id-ID')}`;
+}
+
+function addToCart(name, price) {
+    cart.push({ name, price });
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartDisplay();
+    alert(`${name} ditambahkan ke keranjang!`);
+}
+
+function removeFromCart(index) {
+    cart.splice(index, 1);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartDisplay();
+}
+
+function openCart() {
+    document.getElementById('cartModal').classList.add('active');
+    updateCartDisplay();
+}
+
+function closeCart() {
+    document.getElementById('cartModal').classList.remove('active');
+}
+
+function openCheckout() {
+    closeCart();
+    document.getElementById('checkoutModal').classList.add('active');
+}
+
+function closeCheckout() {
+    document.getElementById('checkoutModal').classList.remove('active');
+}
+
+function closeSuccess() {
+    document.getElementById('orderSuccess').classList.remove('active');
+    cart = [];
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartDisplay();
+}
+
+function submitOrder(event) {
+    event.preventDefault();
+    
+    const orderData = {
+        id: Date.now(),
+        name: document.getElementById('customerName').value,
+        phone: document.getElementById('customerPhone').value,
+        address: document.getElementById('customerAddress').value,
+        payment: document.querySelector('input[name="payment"]:checked').value,
+        notes: document.getElementById('customerNotes').value,
+        items: [...cart],
+        total: cart.reduce((sum, item) => sum + item.price, 0),
+        date: new Date().toLocaleString('id-ID')
+    };
+    
+    orders.push(orderData);
+    localStorage.setItem('orders', JSON.stringify(orders));
+    
+    updateSalesData();
+    
+    document.getElementById('checkoutForm').reset();
+    
+    closeCheckout();
+    document.getElementById('orderSuccess').classList.add('active');
+    
+    setTimeout(() => {
+        document.getElementById('orderSuccess').classList.remove('active');
+    }, 2000);
+}
+
+function updateSalesData() {
+    const highValueOrders = orders.filter(order => order.total > 50000);
+    
+    salesData.forEach(item => {
+        const totalItems = highValueOrders.reduce((count, order) => {
+            return count + order.items.filter(cartItem => cartItem.name === item.name).length;
+        }, 0);
+        item.sales = totalItems;
+        item.total = item.sales * item.price;
+    });
+    
+    createSalesChart();
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    loadRatings();
+
+    document.querySelectorAll('.add-to-cart').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const card = this.closest('.card');
+            const name = card.dataset.name;
+            const price = parseInt(card.dataset.price);
+            addToCart(name, price);
+        });
+    });
+    
+    updateCartDisplay();
+    updateSalesData();
+});
+
+function updateVisitorCount() {
+    const storedCount = localStorage.getItem('visitorCount');
+    let count;
+    
+    if (storedCount) {
+        count = parseInt(storedCount) + Math.floor(Math.random() * 5) + 1;
+    } else {
+        count = Math.floor(Math.random() * 1500) + 500;
+    }
+    
+    localStorage.setItem('visitorCount', count);
+    document.getElementById('visitorCount').textContent = count.toLocaleString('id-ID');
+}
+
+updateVisitorCount();
+</script>
+
+</body>
+</html>

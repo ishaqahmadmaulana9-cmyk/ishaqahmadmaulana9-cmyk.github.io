@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home | Bag Store</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #f3f5f8;
+            color: #333;
+        }
+
+        /* NAVIGATION */
+        nav {
+            background: #fff;
+            padding: 15px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .logo span {
+            color: #ffcc00;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #ffcc00;
+        }
+
+        /* HERO SECTION */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            padding: 100px 50px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #ffcc00;
+            color: #000;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255, 204, 0, 0.4);
+        }
+
+        /* FEATURES */
+        .features {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            padding: 60px 50px;
+            background: #fff;
+        }
+
+        .feature {
+            text-align: center;
+            max-width: 250px;
+        }
+
+        .feature-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .feature h3 {
+            margin-bottom: 10px;
+        }
+
+        .feature p {
+            color: #666;
+        }
+
+        /* PRODUCTS PREVIEW */
+        .products-preview {
+            padding: 60px 50px;
+            text-align: center;
+        }
+
+        .products-preview h2 {
+            font-size: 2em;
+            margin-bottom: 40px;
+        }
+
+        .preview-grid {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .preview-card {
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            width: 250px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .preview-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .preview-card h3 {
+            margin: 15px 0 10px;
+        }
+
+        .preview-card .price {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        /* FOOTER */
+        footer {
+            background: #333;
+            color: #fff;
+            padding: 40px 50px;
+            text-align: center;
+        }
+
+        footer a {
+            color: #ffcc00;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVIGATION -->
+    <nav>
+        <div class="logo">BAG <span>STORE</span></div>
+        <div class="nav-links">
+            <a href="home.html" class="active">Home</a>
+            <a href="produk.html">Produk</a>
+            <a href="kontak.html">Kontak</a>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <h1>Selamat Datang di Bag Store</h1>
+        <p>Koleksi tas terbaru dan tertrend untuk gaya hidup Anda</p>
+        <a href="produk.html" class="btn">Lihat Koleksi</a>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="features">
+        <div class="feature">
+            <div class="feature-icon">🎒</div>
+            <h3>Kualitas Terjamin</h3>
+            <p>Material berkualitas tinggi dan jahitan rapi</p>
+        </div>
+        <div class="feature">
+            <div class="feature-icon">🚚</div>
+            <h3>Pengiriman Cepat</h3>
+            <p>Kirim ke seluruh Indonesia dengan aman</p>
+        </div>
+        <div class="feature">
+            <div class="feature-icon">💬</div>
+            <h3>Customer Service</h3>
+            <p>Siap membantu 24/7 untuk kebutuhan Anda</p>
+        </div>
+    </section>
+
+    <!-- PRODUCTS PREVIEW -->
+    <section class="products-preview">
+        <h2>Koleksi Populer</h2>
+        <div class="preview-grid">
+            <div class="preview-card">
+                <img src="OIP.jpeg" alt="Tas Ransel">
+                <h3>Tas Ransel</h3>
+                <p class="price">Rp80.000</p>
+            </div>
+            <div class="preview-card">
+                <img src="Tas-Kerja-Pria.jpg" alt="Tas Kerja">
+                <h3>Tas Kerja</h3>
+                <p class="price">Rp140.000</p>
+            </div>
+            <div class="preview-card">
+                <img src="original_tas_selempang_pria_eiger_7310_scoria_waist_bag_1-5l_black_full03_rp21jfnp.jpg" alt="Tas Selempang">
+                <h3>Tas Selempang</h3>
+                <p class="price">Rp230.000</p>
+            </div>
+        </div>
+        <br><br>
+        <a href="produk.html" class="btn">Lihat Semua Produk</a>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p><strong>Bag Store</strong> - Toko tas berkualitas dengan harga terjangkau</p>
+        <p>📍 Jl. Contoh No.123, Jakarta | 📞 0812-3456-7890</p>
+        <p>&copy; 2026 Bag Store. All rights reserved.</p>
+    </footer>
+</body>
+</html>
